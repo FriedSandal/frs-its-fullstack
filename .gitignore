@@ -1,0 +1,8 @@
+# Node / Next.js
+**/node_modules/
+**/.next/
+**/out/
+
+# Go binaries & env
+**/frs-its-backend/*.exe
+**/*.env

@@ -1,0 +1,110 @@
+basePath: /
+definitions:
+  models.Course:
+    properties:
+      code:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      quota:
+        type: integer
+      sks:
+        type: integer
+    type: object
+  models.EnrollRequest:
+    properties:
+      course_id:
+        type: integer
+      student_id:
+        type: integer
+    required:
+    - course_id
+    - student_id
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API untuk sistem Formulir Rencana Studi Mahasiswa ITS
+  title: FRS Mahasiswa API
+  version: "1.0"
+paths:
+  /api/courses:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Course'
+            type: array
+      summary: Mendapatkan daftar semua mata kuliah
+      tags:
+      - Course
+  /api/frs/{id}:
+    delete:
+      parameters:
+      - description: Enrollment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Membatalkan mata kuliah (Drop)
+      tags:
+      - FRS
+  /api/frs/{student_id}:
+    get:
+      parameters:
+      - description: ID Mahasiswa
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Mendapatkan daftar FRS mahasiswa
+      tags:
+      - FRS
+  /api/frs/enroll:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data Mahasiswa dan Matkul
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.EnrollRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Mengambil mata kuliah (Enroll FRS)
+      tags:
+      - FRS
+swagger: "2.0"

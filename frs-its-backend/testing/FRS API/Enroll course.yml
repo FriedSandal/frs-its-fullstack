@@ -1,0 +1,31 @@
+info:
+  name: Enroll course
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:8080/api/frs/enroll
+  body:
+    type: json
+    data: |-
+      {
+        "student_id": 1,
+        "course_id": 2
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status code harus 200", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
